@@ -24,9 +24,10 @@ public class HospitalController implements ControllerBluePrint<Hospital> {
     @Autowired
     HospitalService hospitalService;
 
+    @GetMapping
     @Override
     public ResponseEntity getObject() {
-        return null;
+        return ResponseEntity.ok().body(hospitalService.getAllActive());
     }
 
     @GetMapping("{id}")
@@ -79,10 +80,6 @@ public class HospitalController implements ControllerBluePrint<Hospital> {
         hospitalService.deleteObject(id);
     }
 
-    @GetMapping
-    public ResponseEntity getAllActive() {
-        return ResponseEntity.ok().body(hospitalService.getAllActive());
-    }
 
     @GetMapping("name")
     public ResponseEntity findByHospitalName(@RequestParam String hospitalName){

@@ -1,6 +1,9 @@
 package com.omelnur.roya.royaServiceApp.doctors.repositories;
 
 import com.omelnur.roya.royaServiceApp.doctors.models.Doctor;
+import com.omelnur.roya.royaServiceApp.hospitals.models.Hospital;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,13 +19,9 @@ public interface DoctorRepository extends CrudRepository<Doctor, Long> {
     @Query("SELECT d FROM Doctor d WHERE d.doctorName = :doctorName")
     List<Doctor>findByDoctorNameBind(String doctorName);
 
-    @Query("SELECT d.doctorName FROM Doctor d")
+    @Query("SELECT d.doctorName FROM Doctor d WHERE d.isArchived = false ")
     List<String> getDoctorNames();
 
-//    @Transactional
-//    @Modifying
-//    @Query(value = "UPDATE doctor p set is_archived = :isArchived  WHERE p.id = :id" , nativeQuery = true)
-//    void archive(@Param("id") Long id);
 
     @Transactional
     @Modifying(clearAutomatically = true)
@@ -36,4 +35,7 @@ public interface DoctorRepository extends CrudRepository<Doctor, Long> {
 
     @Query("SELECT d FROM Doctor d WHERE d.hospital.id = :hospitalID and d.isArchived = false")
     List<Doctor> findByHospitalId(Long hospitalID);
+
+    @Query("SELECT d FROM Doctor d WHERE d.isArchived = false")
+    Page<Doctor> getActivePagination(Pageable paging);
 }

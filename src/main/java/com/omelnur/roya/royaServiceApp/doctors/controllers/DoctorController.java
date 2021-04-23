@@ -4,11 +4,14 @@ import com.omelnur.roya.royaServiceApp.bluePrint.ControllerBluePrint;
 import com.omelnur.roya.royaServiceApp.doctors.models.Doctor;
 import com.omelnur.roya.royaServiceApp.doctors.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/doctors")
@@ -39,16 +42,28 @@ public class DoctorController implements ControllerBluePrint<Doctor> {
         return doctorService.findObject(id);
     }
 
-    @PostMapping
+
     @Override
     public Doctor addObject(@RequestBody Doctor object) {
-        return doctorService.createObject(object);
+        return null;
     }
 
-    @PutMapping("{id}")
+    @PostMapping
+    public Doctor addDoctor(@RequestBody Doctor object , @RequestParam Long centerId){
+       return doctorService.addDoctor(object,centerId);
+    }
+
     @Override
     public Doctor updateObject(@PathVariable @Positive Long id, @RequestBody Doctor object) {
-        return doctorService.updateObject(id, object);
+        return null;
+    }
+
+
+    @PutMapping
+    public Doctor updateDoctor(@RequestParam @Positive Long id ,
+                               @RequestBody Doctor object ,
+                               @RequestParam Long centerId){
+        return doctorService.updateDoctor(id,object,centerId);
     }
 
     @DeleteMapping("{id}")
@@ -57,23 +72,20 @@ public class DoctorController implements ControllerBluePrint<Doctor> {
         doctorService.deleteObject(id);
     }
 
-    /*
-    @GetMapping("pagination")
+    @GetMapping("pageable")
     public ResponseEntity<Map<String, Object>> getAllEmployees(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "6") Integer size,
             @RequestParam(defaultValue = "id") String sortBy) {
-
-        Page<Doctor> doctorPage = doctorService.getActivePatientNew(page, size, sortBy);
-        doctorPage = doctorService.getActivePatientNew(page, size, sortBy);
+        Page<Doctor> pharmacyPage;
+        pharmacyPage = doctorService.getPageable(page, size, sortBy);
         Map<String, Object> response = new HashMap<>();
-        response.put("patients", doctorPage.getContent());
-        response.put("currentPage", doctorPage.getNumber());
-        response.put("totalItems", doctorPage.getTotalElements());
-        response.put("totalPages", doctorPage.getTotalPages());
+        response.put("doctors", pharmacyPage.getContent());
+        response.put("currentPage", pharmacyPage.getNumber());
+        response.put("totalItems", pharmacyPage.getTotalElements());
+        response.put("totalPages", pharmacyPage.getTotalPages());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-     */
 
 
     /**
