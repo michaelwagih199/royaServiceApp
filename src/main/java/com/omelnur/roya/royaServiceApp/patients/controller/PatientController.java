@@ -48,7 +48,7 @@ public class PatientController implements ControllerBluePrint<Patient> {
             @RequestParam(defaultValue = "id") String sortBy) {
 
         Page<Patient> pageList;
-        pageList = patientService.getPageable(page, size, sortBy);
+        pageList = patientService.getPageable(page, size, sortBy) ;
         Map<String, Object> response = new HashMap<>();
         response.put("patients", pageList.getContent());
         response.put("currentPage", pageList.getNumber());

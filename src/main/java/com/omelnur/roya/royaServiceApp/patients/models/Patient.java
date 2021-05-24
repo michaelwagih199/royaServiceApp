@@ -27,10 +27,10 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @Entity
 @Table(name = "patients")
 public class Patient implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String patientCode;
     private String age;
     private String gender;
     @NotNull(message = "phone is required")

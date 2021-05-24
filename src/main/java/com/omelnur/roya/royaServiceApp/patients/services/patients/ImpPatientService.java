@@ -82,6 +82,7 @@ public class ImpPatientService implements PatientService {
 
     @Override
     public Patient createPatient(Patient object, Long doctorId) {
+        object.setPatientCode("10"+patientRepository.count()+"02");
         object.setDoctor(doctorRepository.findById(doctorId).orElseThrow(ResourceNotFoundException::new));
         return patientRepository.save(object);
     }
@@ -89,6 +90,7 @@ public class ImpPatientService implements PatientService {
     @Override
     public Patient updatePatient(Patient patient, Long patientId, Long doctorId) {
         return patientRepository.findById(patientId).map(post -> {
+            post.setPatientCode(patient.getPatientCode());
             post.setAddress(patient.getAddress());
             post.setAge(patient.getAge());
             post.setId(patient.getId());

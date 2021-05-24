@@ -33,7 +33,6 @@ public class PatientCycle {
     @JoinColumn(name = "PATIENT_ID")
     private Patient  patient;
 
-
     @OneToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
