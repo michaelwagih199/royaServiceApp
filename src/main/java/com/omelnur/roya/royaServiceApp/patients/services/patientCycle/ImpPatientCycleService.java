@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.module.ResolutionException;
+import java.util.List;
 
 @Service
 public class ImpPatientCycleService implements PatientSycleService{
@@ -68,5 +69,10 @@ public class ImpPatientCycleService implements PatientSycleService{
             post.setVoucherNo(patientCycle.getVoucherNo());
             return patientCycleRepository.save(post);
         } ).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @Override
+    public List<PatientCycle> getCycleByPatientId(Long id) {
+        return patientCycleRepository.findByPatientIdBind(id);
     }
 }

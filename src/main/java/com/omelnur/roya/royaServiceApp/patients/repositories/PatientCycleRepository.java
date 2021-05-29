@@ -10,6 +10,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author omelnour created on ١٤‏/٤‏/٢٠٢١
  * inside the package - com.omelnur.roya.royaServiceApp.patients.repositories
@@ -23,4 +25,7 @@ public interface PatientCycleRepository  extends CrudRepository<PatientCycle, Lo
     @Modifying(clearAutomatically = true)
     @Query("UPDATE PatientCycle p set p.isArchived =:isArchived WHERE p.id =:id")
     void archive(@Param("isArchived") Boolean isArchived, @Param("id") Long id);
+
+    @Query("SELECT p FROM PatientCycle p WHERE p.patient.id=:id and p.isArchived = false")
+    List<PatientCycle> findByPatientIdBind(Long id);
 }

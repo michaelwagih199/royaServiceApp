@@ -21,6 +21,12 @@ public class PatientCycleController implements ControllerBluePrint<PatientCycle>
     }
 
 
+    @GetMapping("patient")
+    public ResponseEntity getCycleByPatient(@RequestParam Long patientId ) {
+        return ResponseEntity.ok().body(patientSycleService.getCycleByPatientId(patientId));
+    }
+
+
     @Override
     public PatientCycle getObjectById(Long id) {
         return null;
@@ -37,15 +43,17 @@ public class PatientCycleController implements ControllerBluePrint<PatientCycle>
         return patientSycleService.saveCycle(patientCycle,patientId,hospitalId);
     }
 
-
     @Override
     public PatientCycle updateObject(Long id, PatientCycle object) {
         return null;
     }
 
     @PutMapping("{id}")
-    public PatientCycle updatePatient(@PathVariable Long patientCycleId,@RequestBody PatientCycle patientCycle,@RequestParam Long patientId,@RequestParam Long hospitalId){
-        return patientSycleService.updateCycle(patientCycleId,patientCycle,patientId,hospitalId);
+    public PatientCycle updatePatient(@PathVariable Long id,
+                                      @RequestBody PatientCycle patientCycle,
+                                      @RequestParam Long patientId,
+                                      @RequestParam Long hospitalId){
+        return patientSycleService.updateCycle(id,patientCycle,patientId,hospitalId);
     }
 
     @PutMapping("archive")
@@ -53,4 +61,5 @@ public class PatientCycleController implements ControllerBluePrint<PatientCycle>
     public void deleteObject(Long id) {
         patientSycleService.deleteObject(id);
     }
+
 }

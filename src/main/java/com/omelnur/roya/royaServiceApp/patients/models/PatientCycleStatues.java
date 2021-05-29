@@ -7,7 +7,6 @@ import lombok.ToString;
 import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 import static javax.persistence.TemporalType.TIMESTAMP;
 
@@ -22,13 +21,10 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @ToString
 @Entity
 public class PatientCycleStatues {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cycleStatues;
-    private String comment;
-    private LocalDate testDate;
+    private EnumCycleStatues cycleStatues;
 
     @OneToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_cycle_id")
@@ -46,4 +42,5 @@ public class PatientCycleStatues {
         createdDate = new Date();
         isArchived = false;
     }
+
 }

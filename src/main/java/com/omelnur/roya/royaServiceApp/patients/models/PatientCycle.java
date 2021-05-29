@@ -28,6 +28,8 @@ public class PatientCycle {
     private LocalDate octDate;
     private String voucherNo;
     private String injectionEye;
+    private String comment;
+    private String injectionPayment;
 
     @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "PATIENT_ID")
