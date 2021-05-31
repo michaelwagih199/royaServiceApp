@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/cycleStatues")
+@RequestMapping("api/c")
 public class PatientCycleStatuesController implements ControllerBluePrint<PatientCycleStatues> {
 
     @Autowired

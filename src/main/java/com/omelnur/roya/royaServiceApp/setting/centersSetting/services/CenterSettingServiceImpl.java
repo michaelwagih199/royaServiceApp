@@ -72,7 +72,8 @@ public class CenterSettingServiceImpl implements CenterSettingService {
 
     @Override
     public CentersSetting createCenterSetting(CentersSetting object, Long hospitalId) {
-        if (centerSettingRepository.checkIfCenterExsit(hospitalId) == null) {
+        if (centerSettingRepository.checkIfCenterExsit(hospitalId) == null &&
+                centerSettingRepository.findBycenteruserName(object.getCenteruserName()) == null) {
             object.setHospital(hospitalRepository.findById(hospitalId).orElseThrow(ResourceNotFoundException::new));
             centerSettingRepository.save(object);
         }

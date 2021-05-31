@@ -13,8 +13,10 @@ import java.util.List;
 
 public interface CenterSettingRepository extends CrudRepository<CentersSetting,Long> {
 
-    @Query("select c from CentersSetting c where c.centeruserName =:username and c.centerPassword=:password ")
+    @Query("select c from CentersSetting c where c.centeruserName =:username and c.centerPassword=:password and c.isArchived =false")
     CentersSetting loginToCenter(String username, String password);
+
+    CentersSetting findBycenteruserName(String username);
 
     @Query("select c from CentersSetting c where c.isArchived =false")
     List<CentersSetting> getAllActive();
