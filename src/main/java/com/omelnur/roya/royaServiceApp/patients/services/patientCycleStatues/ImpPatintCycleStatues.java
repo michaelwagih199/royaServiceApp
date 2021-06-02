@@ -7,8 +7,11 @@ import com.omelnur.roya.royaServiceApp.patients.repositories.PatientCycleStatues
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ImpPatintCycleStatues implements PatientCycleStatuesService {
+
     @Autowired
     PatientCycleStatuesRepository patientCycleStatuesRepository;
     @Autowired
@@ -27,12 +30,12 @@ public class ImpPatintCycleStatues implements PatientCycleStatuesService {
 
     @Override
     public void deleteObject(Long id) {
-        patientCycleStatuesRepository.archive(true,id);
+
     }
 
     @Override
     public Iterable<PatientCycleStatues> getAllObject() {
-        return null;
+        return patientCycleStatuesRepository.findAll();
     }
 
     @Override
@@ -44,4 +47,20 @@ public class ImpPatintCycleStatues implements PatientCycleStatuesService {
     public PatientCycleStatues findByPatientCycle(Long cycleId) {
         return patientCycleStatuesRepository.finByPatientCycleId(cycleId);
     }
+
+    @Override
+    public List<PatientCycleStatues> getActiveToHospital(Long hospitalId) {
+        return patientCycleStatuesRepository.findAllActiveByHospitalId(hospitalId);
+    }
+
+    @Override
+    public int getCycleReportStatues(Long patientId, String eyeInjection) {
+        return patientCycleStatuesRepository.countLeftEyeTested(patientId, eyeInjection);
+    }
+
+    @Override
+    public void updateCycleTestToDoneTest(Long cycleStatuesId) {
+        patientCycleStatuesRepository.updateStatuesToDoneTest(cycleStatuesId);
+    }
+
 }

@@ -4,6 +4,7 @@ import com.omelnur.roya.royaServiceApp.exceptions.ResourceNotFoundException;
 import com.omelnur.roya.royaServiceApp.hospitals.repositories.HospitalRepository;
 import com.omelnur.roya.royaServiceApp.patients.models.PatientCycle;
 import com.omelnur.roya.royaServiceApp.patients.repositories.PatientCycleRepository;
+import com.omelnur.roya.royaServiceApp.patients.repositories.PatientCycleStatuesRepository;
 import com.omelnur.roya.royaServiceApp.patients.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class ImpPatientCycleService implements PatientSycleService{
 
     @Autowired
     PatientCycleRepository patientCycleRepository;
+
+    @Autowired
+    PatientCycleStatuesRepository patientCycleStatuesRepository;
 
     @Autowired
     PatientRepository patientRepository;
@@ -36,6 +40,8 @@ public class ImpPatientCycleService implements PatientSycleService{
     @Override
     public void deleteObject(Long id) {
         patientCycleRepository.archive(true,id);
+        // archive repository statues
+        patientCycleStatuesRepository.archive(true,id);
     }
 
     @Override

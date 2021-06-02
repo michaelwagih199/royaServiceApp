@@ -8,15 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/c")
+@RequestMapping("api/cycleStatues")
 public class PatientCycleStatuesController implements ControllerBluePrint<PatientCycleStatues> {
 
     @Autowired
     PatientCycleStatuesService patientCycleStatuesService;
 
+    @GetMapping()
     @Override
     public ResponseEntity getObject() {
-        return null;
+        return ResponseEntity.ok().body(patientCycleStatuesService.getAllObject());
     }
 
     @GetMapping("{id}")
@@ -24,6 +25,7 @@ public class PatientCycleStatuesController implements ControllerBluePrint<Patien
     public PatientCycleStatues getObjectById(@PathVariable Long id) {
         return patientCycleStatuesService.findByPatientCycle(id);
     }
+
 
     @PostMapping
     @Override
