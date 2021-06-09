@@ -35,7 +35,7 @@ public interface PatientCycleStatuesRepository  extends CrudRepository<PatientCy
     // update statues to done Tests by statues cycle id
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE PatientCycleStatues p set p.cycleStatues =1 WHERE p.patientCycle.id =:id")
+    @Query("UPDATE PatientCycleStatues p set p.cycleStatues =1 WHERE p.id =:id")
     void updateStatuesToDoneTest(@Param("id") Long id);
 
 }
