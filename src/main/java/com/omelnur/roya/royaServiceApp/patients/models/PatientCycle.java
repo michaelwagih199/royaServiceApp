@@ -24,8 +24,8 @@ public class PatientCycle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate injectionDate;
-    private LocalDate octDate;
+    private Date injectionDate;
+    private Date octDate;
     private String voucherNo;
     private String injectionEye;
     private String comment;

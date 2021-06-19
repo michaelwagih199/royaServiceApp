@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -21,6 +22,12 @@ public interface PatientCycleStatuesRepository  extends CrudRepository<PatientCy
 
     @Query("select p from PatientCycleStatues p where p.patientCycle.hospital.id=:hospitalId and p.cycleStatues=0 and p.isArchived = false")
     List<PatientCycleStatues> findAllActiveByHospitalId(Long hospitalId);
+
+    @Query("select p from PatientCycleStatues p where p.patientCycle.hospital.id=:hospitalId and p.cycleStatues=1 and (p.createdDate BETWEEN :start AND :end) and p.isArchived = false")
+    List<PatientCycleStatues> findAllTestedDoneByHospitalId(Long hospitalId, Date start, Date end);
+
+    @Query("select p from PatientCycleStatues p where p.patientCycle.hospital.id=:hospitalId and p.cycleStatues=0 and p.patientCycle.patient.patientIDNumber=:patientIdNumber and p.isArchived = false")
+    List<PatientCycleStatues> findAllActiveByPatientIdNumber(Long hospitalId,String patientIdNumber);
 
     @Query("select count(p) from PatientCycleStatues p where p.patientCycle.patient.id=:patientId and p.cycleStatues=1 and p.patientCycle.injectionEye=:injectionEye and p.isArchived = false")
     int countLeftEyeTested(Long patientId , String injectionEye);

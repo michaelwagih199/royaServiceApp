@@ -39,6 +39,7 @@ public class PatientCycleStatues {
 
     @PrePersist
     protected void onCreate() {
+        cycleStatues = EnumCycleStatues.Active;
         createdDate = new Date();
         isArchived = false;
     }

@@ -71,6 +71,11 @@ public class ImpPatientService implements PatientService {
     }
 
     @Override
+    public List<String> getIDNumbers() {
+        return patientRepository.getPatientIDNumbers();
+    }
+
+    @Override
     public List<Patient> findByPatientName(String hospitalName) {
         return patientRepository.findByPatientName(hospitalName);
     }
@@ -109,6 +114,11 @@ public class ImpPatientService implements PatientService {
             post.setDoctor(doctorRepository.findById(doctorId).orElseThrow(ResourceNotFoundException::new));
             return patientRepository.save(post);
         }).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @Override
+    public List<Patient> findByPatientIDNumber(String patientCode) {
+        return patientRepository.findByPatientIDNumber(patientCode);
     }
 
 

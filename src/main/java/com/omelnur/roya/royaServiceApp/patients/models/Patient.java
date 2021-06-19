@@ -31,7 +31,7 @@ public class Patient implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String patientCode;
-    private String age;
+    private Integer age;
     private String gender;
     @NotNull(message = "phone is required")
     private String phone;
@@ -45,8 +45,9 @@ public class Patient implements Serializable {
     private String nationality;
     private String indication;
     private String previousTreatment;
-    private LocalDate diagnosedDate;
-    private LocalDate startingLucentisDate;
+    private String voiceMessageConsent;
+    private Date diagnosedDate;
+    private Date startingLucentisDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")

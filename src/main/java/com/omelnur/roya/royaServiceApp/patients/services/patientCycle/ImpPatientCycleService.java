@@ -61,7 +61,6 @@ public class ImpPatientCycleService implements PatientSycleService{
         return patientCycleRepository.save(patientCycle);
     }
 
-
     @Override
     public PatientCycle updateCycle(Long patientCycleId,PatientCycle patientCycle, Long patientId, Long hospitalId) {
         return patientCycleRepository.findById(patientCycleId).map(post ->{

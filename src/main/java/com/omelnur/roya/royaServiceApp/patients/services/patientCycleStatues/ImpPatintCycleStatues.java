@@ -7,6 +7,7 @@ import com.omelnur.roya.royaServiceApp.patients.repositories.PatientCycleStatues
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -61,6 +62,11 @@ public class ImpPatintCycleStatues implements PatientCycleStatuesService {
     @Override
     public void updateCycleTestToDoneTest(Long cycleStatuesId) {
         patientCycleStatuesRepository.updateStatuesToDoneTest(cycleStatuesId);
+    }
+
+    @Override
+    public List<PatientCycleStatues> getHospitalTestedDone(Long hospitalId, Date start, Date end) {
+        return patientCycleStatuesRepository.findAllTestedDoneByHospitalId(hospitalId,start,end);
     }
 
 }

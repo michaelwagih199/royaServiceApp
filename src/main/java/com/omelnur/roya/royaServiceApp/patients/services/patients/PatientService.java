@@ -15,8 +15,12 @@ public interface PatientService extends BluePrintService<Patient> {
     Page<Patient> getPageable(Integer page, Integer size, String sortBy);
     List<String> getNames();
     List<String>getPhones();
+    List<String> getIDNumbers();
     List<Patient> findByPatientName(String hospitalName);
     List<Patient> findByPatinetPhone1(String hospitalPhone1);
     Patient createPatient(Patient object, Long doctorId);
     Patient updatePatient(Patient patient, Long patientId, Long doctorId);
+    List<Patient> findByPatientIDNumber(String patientCode);
+
+
 }
