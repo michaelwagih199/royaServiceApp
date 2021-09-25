@@ -10,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 public interface DoctorRepository extends CrudRepository<Doctor, Long> {
@@ -38,4 +39,9 @@ public interface DoctorRepository extends CrudRepository<Doctor, Long> {
 
     @Query("SELECT d FROM Doctor d WHERE d.isArchived = false")
     Page<Doctor> getActivePagination(Pageable paging);
+
+
+    @Query(value ="select count(id) from doctor d where (d.created_date BETWEEN :start AND :end) and is_archived = false", nativeQuery = true)
+    Integer countBetweenDates(Date start, Date end);
+
 }

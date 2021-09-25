@@ -9,12 +9,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * @author OMELNOUR
  */
 public interface HospitalRepository extends CrudRepository<Hospital,Long> {
+
     Iterable<Hospital> findByIsArchived(Boolean isArchived);
 
     @Transactional
@@ -33,4 +35,9 @@ public interface HospitalRepository extends CrudRepository<Hospital,Long> {
 
     @Query("SELECT h.hospitalPhone1 FROM Hospital h WHERE h.isArchived = false")
     List<String> getPhones();
+
+
+    @Query(value ="select count(id) from hospital h where (h.created_date BETWEEN :start AND :end) and is_archived = false", nativeQuery = true)
+    Integer countBetweenDates(Date start, Date end);
+
 }

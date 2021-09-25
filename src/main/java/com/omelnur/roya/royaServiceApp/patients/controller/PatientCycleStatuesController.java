@@ -20,10 +20,14 @@ public class PatientCycleStatuesController implements ControllerBluePrint<Patien
         return ResponseEntity.ok().body(patientCycleStatuesService.getAllObject());
     }
 
-    @GetMapping("{id}")
     @Override
-    public PatientCycleStatues getObjectById(@PathVariable Long id) {
-        return patientCycleStatuesService.findByPatientCycle(id);
+    public PatientCycleStatues getObjectById(Long id) {
+        return null;
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity findByPatientCycle(@PathVariable Long id) {
+        return ResponseEntity.ok().body(patientCycleStatuesService.findByPatientCycle(id));
     }
 
 

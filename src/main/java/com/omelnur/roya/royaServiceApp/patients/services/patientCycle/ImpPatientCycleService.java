@@ -62,22 +62,30 @@ public class ImpPatientCycleService implements PatientSycleService{
     }
 
     @Override
-    public PatientCycle updateCycle(Long patientCycleId,PatientCycle patientCycle, Long patientId, Long hospitalId) {
-        return patientCycleRepository.findById(patientCycleId).map(post ->{
-            post.setPatient(patientRepository.findById(patientId).orElseThrow(ResolutionException::new));
-            post.setHospital(hospitalRepository.findById(hospitalId).orElseThrow(ResolutionException::new));
-            post.setId(patientCycle.getId());
-            post.setInjectionDate(patientCycle.getInjectionDate());
-            post.setInjectionEye(patientCycle.getInjectionEye());
-            post.setOctDate(patientCycle.getOctDate());
-            post.setCreated(patientCycle.getCreated());
-            post.setVoucherNo(patientCycle.getVoucherNo());
-            return patientCycleRepository.save(post);
-        } ).orElseThrow(ResourceNotFoundException::new);
+    public PatientCycle updateCycle(Long patientCycleId,PatientCycle object, Long patientId, Long hospitalId) {
+        PatientCycle patientCycle555 = new PatientCycle();
+        patientCycle555.setPatient(patientRepository.findById(patientId).orElseThrow(ResolutionException::new));
+        patientCycle555.setHospital(hospitalRepository.findById(hospitalId).orElseThrow(ResolutionException::new));
+        patientCycle555.setInjectionDate(object.getInjectionDate());
+        patientCycle555.setInjectionEye(object.getInjectionEye());
+        patientCycle555.setOctDate(object.getOctDate());
+        patientCycle555.setCreated(object.getCreated());
+        patientCycle555.setVoucherNo(object.getVoucherNo());
+        patientCycle555.setInjectionPayment(object.getInjectionPayment());
+        patientCycle555.setIsArchived(object.getIsArchived());
+        patientCycle555.setComment(object.getComment());
+        patientCycle555.setId(patientCycleId);
+
+        return patientCycleRepository.save(patientCycle555);
     }
 
     @Override
     public List<PatientCycle> getCycleByPatientId(Long id) {
         return patientCycleRepository.findByPatientIdBind(id);
+    }
+
+    @Override
+    public List<String> getVouchers() {
+        return patientCycleRepository.getVouchers();
     }
 }

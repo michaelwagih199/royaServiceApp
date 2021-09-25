@@ -1,6 +1,7 @@
 package com.omelnur.roya.royaServiceApp.bluePrint;
 
 public interface BluePrintService<Object> {
+    @Deprecated
     public abstract Object createObject(Object object);
     @Deprecated
     public abstract Object updateObject(Long id, Object object);

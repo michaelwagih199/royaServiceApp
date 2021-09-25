@@ -37,4 +37,11 @@ public class GoogleSheetController {
     public ResponseEntity fromDb() {
        return ResponseEntity.ok().body(googleSheetsService.exportData());
     }
+
+    @GetMapping("exportCycles")
+    public ResponseEntity exportCycle() {
+        return ResponseEntity.ok().body(googleSheetsService.exportCycle());
+    }
+
+
 }

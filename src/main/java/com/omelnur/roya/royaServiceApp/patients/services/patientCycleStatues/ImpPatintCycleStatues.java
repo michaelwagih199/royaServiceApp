@@ -69,4 +69,14 @@ public class ImpPatintCycleStatues implements PatientCycleStatuesService {
         return patientCycleStatuesRepository.findAllTestedDoneByHospitalId(hospitalId,start,end);
     }
 
+    @Override
+    public List<PatientCycleStatues> getActiveToHospitalByPatientName(Long hospitalId, String patientName) {
+        return patientCycleStatuesRepository.findByPatientName(hospitalId,patientName);
+    }
+
+    @Override
+    public List<PatientCycleStatues> findByVoucherNo(Long hospitalId, String voucherNo) {
+        return patientCycleStatuesRepository.findByVoucherNo(hospitalId,voucherNo);
+    }
+
 }

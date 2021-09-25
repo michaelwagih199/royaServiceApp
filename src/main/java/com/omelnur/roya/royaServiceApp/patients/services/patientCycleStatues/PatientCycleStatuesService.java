@@ -12,4 +12,6 @@ public interface PatientCycleStatuesService extends BluePrintService<PatientCycl
     int getCycleReportStatues(Long patientId, String eyeInjection);
     void updateCycleTestToDoneTest(Long cycleStatuesId);
     List<PatientCycleStatues> getHospitalTestedDone(Long hospitalId, Date start, Date end);
+    List<PatientCycleStatues> getActiveToHospitalByPatientName(Long hospitalId, String patientName);
+    List<PatientCycleStatues> findByVoucherNo(Long hospitalId, String voucherNo);
 }

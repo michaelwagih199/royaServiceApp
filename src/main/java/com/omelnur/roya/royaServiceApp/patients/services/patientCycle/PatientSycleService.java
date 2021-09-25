@@ -9,4 +9,5 @@ public interface PatientSycleService extends BluePrintService<PatientCycle> {
     public abstract PatientCycle saveCycle(PatientCycle patientCycle,Long patientId,Long hospitalId);
     public abstract PatientCycle updateCycle(Long patientCycleId,PatientCycle patientCycle,Long patientId,Long hospitalId);
     public abstract List<PatientCycle> getCycleByPatientId(Long patientId);
+    public abstract List<String> getVouchers();
 }

@@ -10,12 +10,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * @author omelnour created on ١٤‏/٤‏/٢٠٢١
  * inside the package - com.omelnur.roya.royaServiceApp.patients.repositories
  */
+
 public interface PatientCycleRepository  extends CrudRepository<PatientCycle, Long> {
 
     @Query("SELECT p FROM PatientCycle p WHERE p.isArchived = false")
@@ -28,4 +30,15 @@ public interface PatientCycleRepository  extends CrudRepository<PatientCycle, Lo
 
     @Query("SELECT p FROM PatientCycle p WHERE p.patient.id=:id and p.isArchived = false")
     List<PatientCycle> findByPatientIdBind(Long id);
+
+    @Query("SELECT p.voucherNo FROM PatientCycle p WHERE p.isArchived = false")
+    List<String> getVouchers();
+
+    @Query("SELECT p.patient.patientName,DATE_FORMAT(p.injectionDate,'%d-%m-%Y'),DATE_FORMAT(p.octDate,'%d-%m-%Y') ,p.voucherNo,p.injectionEye,p.injectionPayment,p.hospital.hospitalName FROM PatientCycle p WHERE p.isArchived = false")
+    List<Object> exportDB();
+
+
+    @Query(value ="select count(id) from patient_cycle c where (c.created BETWEEN :start AND :end) and is_archived = false", nativeQuery = true)
+    Integer countBetweenDates(Date start, Date end);
+
 }

@@ -71,6 +71,11 @@ public class ImpPatientService implements PatientService {
     }
 
     @Override
+    public List<String> getPatientCode() {
+        return patientRepository.getPatientCodes();
+    }
+
+    @Override
     public List<String> getIDNumbers() {
         return patientRepository.getPatientIDNumbers();
     }
@@ -81,13 +86,18 @@ public class ImpPatientService implements PatientService {
     }
 
     @Override
+    public List<Patient> findByPatientCode(String patientCode) {
+        return patientRepository.findByPatientCode(patientCode);
+    }
+
+    @Override
     public List<Patient> findByPatinetPhone1(String hospitalPhone1) {
         return patientRepository.findByPhone(hospitalPhone1);
     }
 
     @Override
     public Patient createPatient(Patient object, Long doctorId) {
-        object.setPatientCode("10"+patientRepository.count()+"02");
+        object.setPatientCode("20"+patientRepository.count());
         object.setDoctor(doctorRepository.findById(doctorId).orElseThrow(ResourceNotFoundException::new));
         return patientRepository.save(object);
     }
@@ -104,6 +114,7 @@ public class ImpPatientService implements PatientService {
             post.setPatientIDNumber(patient.getPatientIDNumber());
             post.setGender(patient.getGender());
             post.setDiagnosedDate(patient.getDiagnosedDate());
+            post.setPreviousTreatment(patient.getPreviousTreatment());
             post.setGovernorate(patient.getGovernorate());
             post.setIndication(patient.getIndication());
             post.setNationality(patient.getNationality());
@@ -111,6 +122,7 @@ public class ImpPatientService implements PatientService {
             post.setPhone2(patient.getPhone2());
             post.setStartingLucentisDate(patient.getStartingLucentisDate());
             post.setIsArchived(patient.getIsArchived());
+            post.setVoiceMessageConsent(patient.getVoiceMessageConsent());
             post.setDoctor(doctorRepository.findById(doctorId).orElseThrow(ResourceNotFoundException::new));
             return patientRepository.save(post);
         }).orElseThrow(ResourceNotFoundException::new);

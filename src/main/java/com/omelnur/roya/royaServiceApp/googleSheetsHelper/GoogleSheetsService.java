@@ -165,25 +165,7 @@ public class GoogleSheetsService {
         return patientRepository.exportDB();
     }
 
-
-    // insert to database
-    public void postRowData(String[] stringArray, String range) throws IOException, GeneralSecurityException {
-        List<String> flist = new ArrayList<>();
-        // add defult value for null
-        for (String s : stringArray) {
-            if (s == null || s.length() == 0) {
-                flist.add("-");
-            } else {
-                flist.add(s);
-            }
-        }
-        List<List<Object>> values = Arrays.asList(Arrays.asList(flist.stream().toArray()));
-        sheetsService = getSheetsService();
-        ValueRange appendBody = new ValueRange().setValues(values);
-        AppendValuesResponse appendValuesResponse = sheetsService.spreadsheets().values()
-                .append(SPREAD_SHEET_ID_FROM_DB, range, appendBody).setValueInputOption("USER_ENTERED")
-                .setInsertDataOption("INSERT_ROWS").setIncludeValuesInResponse(true).execute();
+    public List<Object> exportCycle() {
+        return patientCycleRepository.exportDB();
     }
-
-
 }

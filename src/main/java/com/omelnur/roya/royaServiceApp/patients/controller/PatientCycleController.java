@@ -26,6 +26,10 @@ public class PatientCycleController implements ControllerBluePrint<PatientCycle>
         return ResponseEntity.ok().body(patientSycleService.getCycleByPatientId(patientId));
     }
 
+    @GetMapping("vouchers")
+    public ResponseEntity getVouchers(){
+        return ResponseEntity.ok().body(patientSycleService.getVouchers());
+    }
 
     @Override
     public PatientCycle getObjectById(Long id) {
@@ -61,5 +65,7 @@ public class PatientCycleController implements ControllerBluePrint<PatientCycle>
     public void deleteObject(Long id) {
         patientSycleService.deleteObject(id);
     }
+
+
 
 }

@@ -29,6 +29,16 @@ public class CentersStatuesController {
         return ResponseEntity.ok().body(patientCycleStatuesService.getActiveToHospital(hospitalId));
     }
 
+    @GetMapping("/hospital/patientName")
+    public ResponseEntity getActiveToHospitalByPatientName(@RequestParam Long hospitalId,@RequestParam  String patientName){
+        return ResponseEntity.ok().body(patientCycleStatuesService.getActiveToHospitalByPatientName(hospitalId,patientName));
+    }
+
+    @GetMapping("/hospital/voucherNo")
+    public ResponseEntity getByVoucherNo(@RequestParam Long hospitalId,String voucherNo){
+        return ResponseEntity.ok().body(patientCycleStatuesService.findByVoucherNo(hospitalId,voucherNo));
+    }
+
     @GetMapping("/hospital/TestedDone")
     public ResponseEntity getTestedDoneToHospital(@RequestParam Long hospitalId,
                                                   @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date start,

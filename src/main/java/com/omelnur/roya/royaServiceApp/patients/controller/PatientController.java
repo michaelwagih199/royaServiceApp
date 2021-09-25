@@ -69,6 +69,11 @@ public class PatientController implements ControllerBluePrint<Patient> {
         return ResponseEntity.ok().body(patientService.getPhones());
     }
 
+    @GetMapping("/codes")
+    public ResponseEntity getCodes() {
+        return ResponseEntity.ok().body(patientService.getPatientCode());
+    }
+
     @GetMapping("/IDNumbers")
     public ResponseEntity getIDNumbers() {
         return ResponseEntity.ok().body(patientService.getIDNumbers());
@@ -79,13 +84,18 @@ public class PatientController implements ControllerBluePrint<Patient> {
         return ResponseEntity.ok().body(patientService.findByPatientName(patientName));
     }
 
+    @GetMapping("code")
+    public ResponseEntity findByPatientCode(@RequestParam String patientCode) {
+        return ResponseEntity.ok().body(patientService.findByPatientCode(patientCode));
+    }
+
     @GetMapping("phone")
     public ResponseEntity findByHospitalPhone1(@RequestParam String phone) {
         return ResponseEntity.ok().body(patientService.findByPatinetPhone1(phone));
     }
 
     @GetMapping("patientIDNumber")
-    public ResponseEntity findByPatientCode(@RequestParam String idNumber) {
+    public ResponseEntity findByPatientIdNumber(@RequestParam String idNumber) {
         return ResponseEntity.ok().body(patientService.findByPatientIDNumber(idNumber));
     }
 

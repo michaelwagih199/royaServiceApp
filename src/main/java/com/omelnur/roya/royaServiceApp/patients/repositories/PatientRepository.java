@@ -2,6 +2,7 @@ package com.omelnur.roya.royaServiceApp.patients.repositories;
 
 import com.omelnur.roya.royaServiceApp.hospitals.models.Hospital;
 import com.omelnur.roya.royaServiceApp.patients.models.Patient;
+import com.omelnur.roya.royaServiceApp.patients.models.PatientCycleStatues;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,7 +32,9 @@ public interface PatientRepository extends CrudRepository<Patient, Long> {
     @Query("SELECT p.patientName FROM Patient p WHERE p.isArchived = false")
     List<String> getNames();
 
-    @Query("SELECT p FROM Patient p WHERE p.patientName=:hospitalName and p.isArchived = false")
+
+
+    @Query("SELECT p FROM Patient p WHERE p.patientName like %:hospitalName% and p.isArchived = false")
     List<Patient> findByPatientName(String hospitalName);
 
     @Query("SELECT p FROM Patient p WHERE p.phone=:hospitalName and p.isArchived = false")
@@ -49,12 +53,40 @@ public interface PatientRepository extends CrudRepository<Patient, Long> {
 
     @Query("SELECT p.patientName,p.voiceMessageConsent, p.patientCode,p.patientIDNumber," +
             " p.gender,p.nationality,p.age,p.address,p.governorate,p.phone,p.phone2," +
-             "p.doctor.doctorName, p.doctor.hospital.hospitalName, p.indication , p.diagnosedDate ,p.previousTreatment, p.startingLucentisDate FROM Patient p WHERE p.isArchived = false")
+             "p.doctor.doctorName, p.doctor.hospital.hospitalName, p.indication , DATE_FORMAT(p.diagnosedDate,'%d-%m-%Y')  ,p.previousTreatment, DATE_FORMAT( p.startingLucentisDate,'%d-%m-%Y') FROM Patient p WHERE p.isArchived = false")
     List<Object>exportDB();
 
+    @Query("SELECT p.patientCode FROM Patient p WHERE p.isArchived = false")
+    List<String> getPatientCodes();
 
-//    @Query("SELECT p FROM Patient p WHERE p.isArchived = false")
-//    List<Patient> exportDB();
+    @Query("SELECT p FROM Patient p WHERE p.patientCode =:patientCode and p.isArchived = false")
+    List<Patient> findByPatientCode(String patientCode);
+
+
+    // reports
+
+
+    @Query(value ="select count(id) from patients p where (p.created_date BETWEEN :start AND :end) and is_archived = false", nativeQuery = true)
+    Integer countPatientsBetweenDates(Date start, Date end);
+
+    @Query(value ="select count(id) from patients p where (p.created_date BETWEEN :start AND :end) and p.gender ='male' and is_archived = false", nativeQuery = true)
+    Integer countMales(Date start, Date end);
+
+    @Query(value ="select count(id) from patients p where (p.created_date BETWEEN :start AND :end) and p.gender ='female' and is_archived = false", nativeQuery = true)
+    Integer countFemales(Date start, Date end);
+
+    @Query(value ="select count(id) from patients p where (p.created_date BETWEEN :start AND :end) and age>0 and age<50 and is_archived = false", nativeQuery = true)
+    Integer countAgeClassA(Date start, Date end);
+
+    @Query(value ="select count(id) from patients p where (p.created_date BETWEEN :start AND :end) and age>50 and age<70 and is_archived = false", nativeQuery = true)
+    Integer countAgeClassB(Date start, Date end);
+
+    @Query(value ="select count(id) from patients p where (p.created_date BETWEEN :start AND :end) and age>70 and age<100 and is_archived = false", nativeQuery = true)
+    Integer countAgeClassC(Date start, Date end);
+
+    @Query(value ="select count(p.id) from patients p join patient_cycle c on p.id = c.patient_id where (p.created_date BETWEEN :start AND :end) and  p.starting_lucentis_date = c.injection_date and p.is_archived = false", nativeQuery = true)
+    Integer countNewCases(Date start, Date end);
+
 
 
 }
